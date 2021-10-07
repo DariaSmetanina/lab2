@@ -1,4 +1,6 @@
+import java.io.InputStreamReader;
 import java.text.ParseException;
+import java.util.Scanner;
 
 import wrapper.SmartSpaceException;
 import wrapper.SmartSpaceKPI;
@@ -44,6 +46,7 @@ public class main {
             System.out.println("___________________________________________");
             System.out.println("Guess a number");
             SmartSpaceKPI kp1 = new SmartSpaceKPI("127.0.0.1", 10010, "y");
+            SmartSpaceKPI kp2 = new SmartSpaceKPI("127.0.0.1", 10010, "y");
             kp1.remove(new SmartSpaceTriple(null,null,null));
 
             SmartSpaceTriple subscrAll = new SmartSpaceTriple(null,null,null);
@@ -51,22 +54,25 @@ public class main {
             ServerHandler server = new ServerHandler(kp1);
             kp1.subscribe(subscrAll, server);
 
-            UserHandler user1=new UserHandler(kp1, "user1");
-            kp1.subscribe(subscrAll, user1);
+            UserHandler user1=new UserHandler(kp2, "user1");
+//            kp2.subscribe(subscrAll, user1);
 
 //            UserHandler user2=new UserHandler(kp1, "user3");
 //            kp1.subscribe(subscrAll, user2);
-
-            for (int k=0; k<1000; k++) {
-                sleep(10);
+            boolean exit=true;
+            while(exit) {
+                if (new Scanner(new InputStreamReader(System.in)).nextLine().length() > 0) {
+                    exit=false;
+                }
             }
-
             kp1.unsubscribe(subscrAll, true);
+            kp2.unsubscribe(subscrAll, true);
 
             kp1.leave();
+            kp2.leave();
 
             System.out.println("end");
-        } catch (SmartSpaceException | InterruptedException e) {
+        } catch (SmartSpaceException e) {
             e.printStackTrace();
         }
 

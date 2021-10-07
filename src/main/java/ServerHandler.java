@@ -6,6 +6,8 @@ import wrapper.SmartSpaceTriple;
 
 import java.util.Vector;
 
+import static java.lang.Thread.sleep;
+
 public class ServerHandler implements iKPIC_subscribeHandler2 {
 
     SmartSpaceKPI kpi;
@@ -17,8 +19,14 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
     @Override
     public void kpic_RDFEventHandler(Vector<Vector<String>> vector, Vector<Vector<String>> vector1, String s, String s1) {
         for (Vector<String> data : vector) {
+            try {
+                sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if(data.get(2).equals("play")){
                 String randomNumber=String.valueOf((int)(Math.random() * (100)));
+                randomNumber = "66";
                 try {
                     kpi.insert(new SmartSpaceTriple(data.get(0),"has", randomNumber));
                     kpi.insert(new SmartSpaceTriple(data.get(0),"start", "game"));
@@ -29,22 +37,25 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
              if(data.get(1).equals("suppose")){
                 try {
                     SmartSpaceTriple secretNumber = kpi.query(new SmartSpaceTriple(data.get(0),"has",null)).get(0);
-                    if(Integer.parseInt(data.get(2))>Integer.parseInt(secretNumber.getSubject())){
-                        kpi.insert(new SmartSpaceTriple(data.get(0),"gets hint","smaller"));
+                    int suggestion=Integer.parseInt(data.get(2));
+                    int secret=Integer.parseInt(secretNumber.getObject());
+                    if(suggestion>secret){
+                        SmartSpaceTriple tr = new SmartSpaceTriple(data.get(0),"gets hint","smaller");
+                        System.out.println(tr);
+                        kpi.insert(tr);
+                        System.out.println(kpi.query(new SmartSpaceTriple(null, null,null)));
                     }
-                    if(Integer.parseInt(data.get(2))<Integer.parseInt(secretNumber.getSubject())){
+                    if(suggestion<secret){
                         kpi.insert(new SmartSpaceTriple(data.get(0),"gets hint","bigger"));
                     }
-                    if(Integer.parseInt(data.get(2))==Integer.parseInt(secretNumber.getSubject())){
+                    if(suggestion==secret){
                         kpi.insert(new SmartSpaceTriple(data.get(0),"gets hint","win"));
                     }
-
                 } catch (SmartSpaceException e) {
                     e.printStackTrace();
                 }
             }
         }
-
     }
 
     @Override
