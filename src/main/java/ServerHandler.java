@@ -26,7 +26,7 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
             }
             if(data.get(2).equals("play")){
                 String randomNumber=String.valueOf((int)(Math.random() * (100)));
-                randomNumber = "66";
+                randomNumber = "38";
                 try {
                     kpi.insert(new SmartSpaceTriple(data.get(0),"has", randomNumber));
                     kpi.insert(new SmartSpaceTriple(data.get(0),"start", "game"));
