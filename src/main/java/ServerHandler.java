@@ -26,7 +26,7 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
             }
             if(data.get(2).equals("play")){
                 String randomNumber=String.valueOf((int)(Math.random() * (100)));
-                randomNumber = "38";
+                System.out.println(data.get(0)+randomNumber);
                 try {
                     kpi.insert(new SmartSpaceTriple(data.get(0),"has", randomNumber));
                     kpi.insert(new SmartSpaceTriple(data.get(0),"start", "game"));
@@ -35,7 +35,7 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
                     e.printStackTrace();
                 }
              }
-             if(data.get(1).equals("suppose")){
+            if(data.get(1).equals("suppose")){
                 try {
                     SmartSpaceTriple secretNumber = kpi.query(new SmartSpaceTriple(data.get(0),"has",null)).get(0);
                     int suggestion=Integer.parseInt(data.get(2));
@@ -51,7 +51,11 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
                         hint = "win";
                     }
                     SmartSpaceTriple tr = new SmartSpaceTriple(data.get(0),"gets hint",hint);
-                    kpi.update(tr,new SmartSpaceTriple(data.get(0),"gets hint",null));
+//                    kpi.update(tr,new SmartSpaceTriple(data.get(0),"gets hint",null));
+                    kpi.remove(new SmartSpaceTriple(data.get(0),"gets hint",null));
+                    kpi.insert(tr);
+                    Vector old = kpi.query(new SmartSpaceTriple(data.get(0),"gets hint",null));
+                    System.out.println(old);
                 } catch (SmartSpaceException e) {
                     e.printStackTrace();
                 }

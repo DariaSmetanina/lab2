@@ -33,7 +33,10 @@ public class UserHandler implements iKPIC_subscribeHandler2 {
             e.printStackTrace();
         }
         for (Vector<String> data : vector) {
-            if(data.get(0).equals(name) && data.get(1).equals("start")){
+            if(!data.get(0).equals(name)){
+                return;
+            }
+            if(data.get(1).equals("start")){
                 try {
                     secretNumber=50;
                     kpi.insert(new SmartSpaceTriple(name,"suppose", String.valueOf(secretNumber)));
@@ -62,7 +65,8 @@ public class UserHandler implements iKPIC_subscribeHandler2 {
                 }
                 System.out.println(secretNumber);
                 try {
-                    kpi.update(new SmartSpaceTriple(name,"suppose", String.valueOf(secretNumber)),new SmartSpaceTriple(name,"suppose", null));;
+                    kpi.remove(new SmartSpaceTriple(name,"suppose", null));;
+                    kpi.insert(new SmartSpaceTriple(name,"suppose", String.valueOf(secretNumber)));
                 } catch (SmartSpaceException e) {
                     e.printStackTrace();
                 }

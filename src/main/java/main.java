@@ -54,16 +54,17 @@ public class main {
             kp1.subscribe(subscrAll, server);
 
             UserHandler user1=new UserHandler( "user1");
-//            kp2.subscribe(subscrAll, user1);
+            UserHandler user2=new UserHandler( "user2");
 
-//            UserHandler user2=new UserHandler(kp1, "user3");
-//            kp1.subscribe(subscrAll, user2);
             boolean exit=true;
             while(exit) {
                 if (new Scanner(new InputStreamReader(System.in)).nextLine().length() > 0) {
                     exit=false;
                 }
             }
+            System.out.println(kp1.query(new SmartSpaceTriple(user1.name,null,null)));
+            System.out.println(kp1.query(new SmartSpaceTriple(user2.name,null,null)));
+
             kp1.unsubscribe(subscrAll, true);
 
             kp1.leave();
