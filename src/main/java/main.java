@@ -46,7 +46,6 @@ public class main {
             System.out.println("___________________________________________");
             System.out.println("Guess a number");
             SmartSpaceKPI kp1 = new SmartSpaceKPI("127.0.0.1", 10010, "y");
-            SmartSpaceKPI kp2 = new SmartSpaceKPI("127.0.0.1", 10010, "y");
             kp1.remove(new SmartSpaceTriple(null,null,null));
 
             SmartSpaceTriple subscrAll = new SmartSpaceTriple(null,null,null);
@@ -54,7 +53,7 @@ public class main {
             ServerHandler server = new ServerHandler(kp1);
             kp1.subscribe(subscrAll, server);
 
-            UserHandler user1=new UserHandler(kp2, "user1");
+            UserHandler user1=new UserHandler( "user1");
 //            kp2.subscribe(subscrAll, user1);
 
 //            UserHandler user2=new UserHandler(kp1, "user3");
@@ -66,10 +65,8 @@ public class main {
                 }
             }
             kp1.unsubscribe(subscrAll, true);
-            kp2.unsubscribe(subscrAll, true);
 
             kp1.leave();
-            kp2.leave();
 
             System.out.println("end");
         } catch (SmartSpaceException e) {

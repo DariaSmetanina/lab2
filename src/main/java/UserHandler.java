@@ -17,11 +17,7 @@ public class UserHandler implements iKPIC_subscribeHandler2 {
 
     String name;
 
-    public String getName() {
-        return name;
-    }
-
-    UserHandler(SmartSpaceKPI kp, String nm) throws SmartSpaceException {
+    UserHandler(String nm) throws SmartSpaceException {
         kpi=new SmartSpaceKPI("127.0.0.1", 10010, "y");
         name=nm;
         kpi.insert(new SmartSpaceTriple(name,"want","play"));
@@ -66,7 +62,7 @@ public class UserHandler implements iKPIC_subscribeHandler2 {
                 }
                 System.out.println(secretNumber);
                 try {
-                    kpi.insert(new SmartSpaceTriple(name,"suppose", String.valueOf(secretNumber)));;
+                    kpi.update(new SmartSpaceTriple(name,"suppose", String.valueOf(secretNumber)),new SmartSpaceTriple(name,"suppose", null));;
                 } catch (SmartSpaceException e) {
                     e.printStackTrace();
                 }

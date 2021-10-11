@@ -30,27 +30,28 @@ public class ServerHandler implements iKPIC_subscribeHandler2 {
                 try {
                     kpi.insert(new SmartSpaceTriple(data.get(0),"has", randomNumber));
                     kpi.insert(new SmartSpaceTriple(data.get(0),"start", "game"));
+                    kpi.insert(new SmartSpaceTriple(data.get(0),"gets hint", ""));
                 } catch (SmartSpaceException e) {
                     e.printStackTrace();
                 }
-            }
+             }
              if(data.get(1).equals("suppose")){
                 try {
                     SmartSpaceTriple secretNumber = kpi.query(new SmartSpaceTriple(data.get(0),"has",null)).get(0);
                     int suggestion=Integer.parseInt(data.get(2));
                     int secret=Integer.parseInt(secretNumber.getObject());
+                    String hint="";
                     if(suggestion>secret){
-                        SmartSpaceTriple tr = new SmartSpaceTriple(data.get(0),"gets hint","smaller");
-                        System.out.println(tr);
-                        kpi.insert(tr);
-                        System.out.println(kpi.query(new SmartSpaceTriple(null, null,null)));
+                        hint = "smaller";
                     }
                     if(suggestion<secret){
-                        kpi.insert(new SmartSpaceTriple(data.get(0),"gets hint","bigger"));
+                        hint = "bigger";
                     }
                     if(suggestion==secret){
-                        kpi.insert(new SmartSpaceTriple(data.get(0),"gets hint","win"));
+                        hint = "win";
                     }
+                    SmartSpaceTriple tr = new SmartSpaceTriple(data.get(0),"gets hint",hint);
+                    kpi.update(tr,new SmartSpaceTriple(data.get(0),"gets hint",null));
                 } catch (SmartSpaceException e) {
                     e.printStackTrace();
                 }
