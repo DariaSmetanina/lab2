@@ -6,8 +6,6 @@ import wrapper.SmartSpaceException;
 import wrapper.SmartSpaceKPI;
 import wrapper.SmartSpaceTriple;
 
-import static java.lang.Thread.sleep;
-
 
 public class main {
     public static void main(String args[]) throws ParseException {
@@ -55,6 +53,8 @@ public class main {
 
             UserHandler user1=new UserHandler( "user1");
             UserHandler user2=new UserHandler( "user2");
+            UserHandler user3=new UserHandler( "user3");
+            UserHandler user4=new UserHandler( "user4");
 
             boolean exit=true;
             while(exit) {
@@ -64,6 +64,8 @@ public class main {
             }
             System.out.println(kp1.query(new SmartSpaceTriple(user1.name,null,null)));
             System.out.println(kp1.query(new SmartSpaceTriple(user2.name,null,null)));
+            System.out.println(kp1.query(new SmartSpaceTriple(user3.name,null,null)));
+            System.out.println(kp1.query(new SmartSpaceTriple(user4.name,null,null)));
 
             kp1.unsubscribe(subscrAll, true);
 
